@@ -83,7 +83,7 @@ tests_no_zope = ["coverage[toml] (>=5.0.2)", "hypothesis", "pympler", "pytest (>
 
 [[package]]
 name = "base-wrapper"
-version = "0.1.1"
+version = "0.1.2"
 description = ""
 category = "main"
 optional = false
@@ -97,7 +97,7 @@ aiohttp = "^3.8.1"
 type = "git"
 url = "https://github.com/devRMA/base_wrapper.git"
 reference = "main"
-resolved_reference = "7e2712a73dcf62e4558eff7cd316a0acb9a97d29"
+resolved_reference = "72205cc8671665013f1556950cdd5ca736fd8009"
 
 [[package]]
 name = "certifi"
