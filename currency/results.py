@@ -46,3 +46,30 @@ class CurrencyResult:
     sell: float
     timestamp: int
     updated_at: datetime
+
+    def __eq__(self, other: object) -> bool:
+        if isinstance(other, CurrencyResult):
+            return all(
+                [
+                    self.currency == other.currency,
+                    self.currency_to == other.currency_to,
+                    self.timestamp == other.timestamp
+                ]
+            )
+        return False
+
+    def __lt__(self, other: object) -> bool:
+        if isinstance(other, CurrencyResult):
+            return self.sell < other.sell
+        return False
+
+    def __le__(self, other: object) -> bool:
+        if isinstance(other, CurrencyResult):
+            return self.sell <= other.sell
+        return False
+
+    def __str__(self) -> str:
+        return f'{self.currency} -> {self.currency_to}: {self.sell}'
+
+    def __float__(self) -> float:
+        return self.sell
