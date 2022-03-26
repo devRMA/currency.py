@@ -1,17 +1,21 @@
 from datetime import datetime
 from json import loads
-from typing import Any, Dict, List, Union
+from typing import TYPE_CHECKING, Any, Dict, List, TypeAlias, Union
 
 import aiohttp
 from base_wrapper.client import Client as BaseClient
 
-from .currencies import CurrencyEnum
 from .errors import CoinNotExists, HTTPException
 from .results import CurrencyResult
 from .route import Route
 
+if TYPE_CHECKING:
+    from .currencies import TCurrency
+else:
+    TCurrency: TypeAlias = None
 
-async def json_or_text(
+
+async def _json_or_text(
     response: aiohttp.ClientResponse
 ) -> Union[Union[Dict[str, Any], List[Dict[str, Any]]], str]:
     text = await response.text(encoding='utf-8')
@@ -24,10 +28,30 @@ async def json_or_text(
 
 
 class Client(BaseClient):
-    async def get_last_currency(self, coin: str) -> CurrencyResult:
-        response = await self.request(Route('GET', '/last/{coin}', coin=coin))
-        data = await json_or_text(response)
-        if response.status == 200 and isinstance(data, dict):
+    async def get_last_currency(self, coin: TCurrency) -> CurrencyResult:
+        """
+        Get the last currency price
+
+        Parameters
+        ----------
+        coin : `str`
+            The coin to get the price
+
+        Returns
+        -------
+        `CurrencyResult`
+            The result of the currency
+
+        Raises
+        ------
+        `CoinNotExists`
+            Raised if the coin does not exists in the API
+        `HTTPException`
+            Any other exception raised by the API
+        """
+        resp = await self.request(Route('GET', '/last/{coin}', coin=coin))
+        data = await _json_or_text(resp)
+        if resp.status == 200 and isinstance(data, dict):
             result: Dict[str, Any] = data.get(next(iter(data)), {})
             return CurrencyResult(
                 currency=result.get('code', ''),
@@ -44,7 +68,7 @@ class Client(BaseClient):
                     int(result.get('timestamp', 0))
                 )
             )
-        elif response.status == 404 and isinstance(data, dict):
-            raise CoinNotExists(response, data)
+        elif resp.status == 404 and isinstance(data, dict):
+            raise CoinNotExists(resp, data)
         else:
-            raise HTTPException(response, 'failed to get last currency')
+            raise HTTPException(resp, 'failed to get last currency')
