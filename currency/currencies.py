@@ -1,11 +1,30 @@
 from enum import Enum
+from typing import Literal, TypeAlias
+
+# Data taken from https://economia.awesomeapi.com.br/json/available/uniq
+
+# Type alias used for typing the parameters
+TCurrency: TypeAlias = Literal[
+    'AED', 'AFN', 'ALL', 'AMD', 'ANG', 'AOA', 'ARS', 'AUD', 'AZN', 'BAM', 'BBD',
+    'BDT', 'BGN', 'BHD', 'BIF', 'BND', 'BOB', 'BRL', 'BRLT', 'BSD', 'BTC',
+    'BWP', 'BYN', 'BZD', 'CAD', 'CHF', 'CLP', 'CNH', 'CNY', 'COP', 'CRC', 'CUP',
+    'CVE', 'CZK', 'DJF', 'DKK', 'DOGE', 'DOP', 'DZD', 'EGP', 'ETB', 'ETH',
+    'EUR', 'FJD', 'GBP', 'GEL', 'GHS', 'GMD', 'GNF', 'GTQ', 'HKD', 'HNL', 'HRK',
+    'HTG', 'HUF', 'IDR', 'ILS', 'INR', 'IQD', 'IRR', 'ISK', 'JMD', 'JOD', 'JPY',
+    'KES', 'KGS', 'KHR', 'KMF', 'KRW', 'KWD', 'KYD', 'KZT', 'LAK', 'LBP', 'LKR',
+    'LSL', 'LTC', 'LYD', 'MAD', 'MDL', 'MGA', 'MKD', 'MMK', 'MNT', 'MOP', 'MRO',
+    'MUR', 'MVR', 'MWK', 'MXN', 'MYR', 'MZN', 'NAD', 'NGN', 'NIO', 'NOK', 'NPR',
+    'NZD', 'OMR', 'PAB', 'PEN', 'PGK', 'PHP', 'PKR', 'PLN', 'PYG', 'QAR', 'RON',
+    'RSD', 'RUB', 'RWF', 'SAR', 'SCR', 'SDG', 'SDR', 'SEK', 'SGD', 'SOS', 'STD',
+    'SVC', 'SYP', 'SZL', 'THB', 'TJS', 'TMT', 'TND', 'TRY', 'TTD', 'TWD', 'TZS',
+    'UAH', 'UGX', 'USD', 'USDT', 'UYU', 'UZS', 'VEF', 'VND', 'VUV', 'XAF',
+    'XAGG', 'XBR', 'XCD', 'XOF', 'XPF', 'XRP', 'YER', 'ZAR', 'ZMK', 'ZWL']
 
 
 class CurrencyEnum(Enum):
     """
     Enum of currencies
     """
-    # Data taken from https://economia.awesomeapi.com.br/json/available/uniq
     AED = 'Dirham dos Emirados'
     AFN = 'Afghani do Afeganistão'
     ALL = 'Lek Albanês'
